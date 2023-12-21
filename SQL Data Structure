@@ -1,0 +1,116 @@
+Database software -> Database -> Schema -> Table -> Data
+Database Software:
+- Common database software
+  - MySQL, Postgre SQL, MsSQL, etc
+- Database
+  - separate data entities with different commercial meanings
+- Schema
+  - a collection of Tables, that can be split and grouped according to logic, and some details
+- Table
+  - The key section of the database
+  - record different data entities, such as users, products, etc
+- Data
+  - different types of data can be stored
+
+Schema Syntax
+- Basic SQL Syntax
+  - CREATE SCHEMA `new_schema` 
+  - DEFAULT CHARACTER SET utf8mb4;
+    - character encoding, using utf8mb4 here
+  - COLLATE utf8mb4_unicode_ci
+  - SELECT * FROM INFORMATION_SCHEMA.SCHEMATA;
+
+Table
+- nanny of all data
+- example table
+  id	name	age
+  1	 John	  40
+  2	 May	  30
+  3	 Tim	  25
+CREATE TABLE `new_schema`.`new_table` (
+  `id` INT NOT NULL COMMENT 'This is a primary index',
+  PRIMARY KEY (`id`)
+);
+- new_table is naming
+- it is the column name
+- INT is the data type that will be stored in this column.
+- NOT NULL is a kind of column attribute function. 
+- This column has a COMMENT with the display text This is a primary index.
+  - set the primary key of this table to be id
+    - PRIMARY KEY (`id`)
+      - important for concatenating data tables
+- Read Table
+  - use SHOW FULL COLUMNS  
+  - SHOW FULL COLUMNS FROM `new_schema`.`new_table`;
+- Destroy Table
+  - DROP TABLE `new_schema`.`new_table`;
+- Clean Table
+  - reset data inside the table instead of destroying it
+  - TRUNCATE `new_schema`.`new_table`;
+
+Column
+- responsible for limiting the table and size of values that the data can store
+- Data Types
+  - 3 types
+  - number
+    - BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT
+      - Int is from -2147483648 to 2147483647.
+    - Double, Float, and Decimal, represent decimals
+      - DECIMAL can be set to DECIMAL(5, 2), which means that the value of the column must be 5 digits, 
+        and two of the digits occur after the decimal point, such as a value like 666.88.
+  - DateTime
+    - DATE, MONTH, YEAR: Set to date, month, and year.
+    - DATETIME, TIMESTAMP: A relatively complete date data format
+      - DATETIME can accept a purely datetime value format like 8888-01-01 00:00:00, 
+        but TIMESTAMP is limited to between 1970-01-01 00:00:01 and 2038-01-19 03:14:07
+  - text
+    - CHAR, VARCHAR
+      - store plain text, the former is suitable for dat with fixed text length
+      - VARCHAR(45), 45 characters storage
+    - TEXT, LONGTEXT
+      - TEXT for text data whose maximum length is unknown
+- Special Data types
+  - BINARY, BLOB: Store data of file type, such as images or videos. 
+    - BLOB (Binary Large Object) is not only for those types but also for large unstructured data.
+- Column Attribute Functions
+  - ensure new data is added to the table
+  - NOT NULL: 
+    - means that the value in the field cannot be NULL
+    - NULL means nothing
+  - AUTO_INCREMENT
+    - automatically generate the column's values one by one using numbers.
+  - DEFAULT 
+    - You can set the default value of the column because the data to be inserted in the field may be empty in some circumstances
+
+CREATE SCHEMA `new_schema` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE `new_schema`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'This is the primary index',
+  `name` VARCHAR(45) NOT NULL DEFAULT 'N/A',
+  PRIMARY KEY (`id`)
+);
+
+Create and Update Column
+- Create
+  ALTER TABLE `new_schema`.`users`
+  ADD COLUMN `age` INT NULL AFTER `name`;
+  - ALTER TABLE
+    - declare alter table
+  - ADD COLUMN
+    - use add COLUMN keyword
+    - use the AFTER to set the column order, t
+      his increases readability when viewing the table column setting.
+- Update
+  - updating a column is more like generate a new rule and overwrite original version
+    ALTER TABLE `new_schema`.`users`
+    CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT,
+    CHANGE COLUMN `name` `user_name` VARCHAR(45) NOT NULL DEFAULT 'No Name';
+
+CREATE SCHEMA `new_schema` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE TABLE `new_schema`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'This is the primary index',
+  `name` VARCHAR(45) NOT NULL DEFAULT 'N/A',
+  PRIMARY KEY (`id`)
+);
+    
+
