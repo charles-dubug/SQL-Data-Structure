@@ -1,0 +1,18 @@
+WHERE
+- Basic Conditions (=, <, >, !=)
+  SELECT * FROM `new_schema`.`users` WHERE id = 1;
+  SELECT * FROM `new_schema`.`users` WHERE id > 2;
+- NULL
+  SELECT * FROM `new_schema`.`users` WHERE height IS NULL;
+  SELECT * FROM `new_schema`.`users` WHERE height IS NOT NULL;
+- Multiple Conditions (AND/OR)
+  SELECT * FROM `new_schema`.`users` WHERE age < 40 AND height > 160;
+  SELECT * FROM `new_schema`.`users` WHERE id < 4 AND (age > 30 OR height > 175);
+- Range Conditions (IN, BETWEEN, LIKE)
+  SELECT * FROM `new_schema`.`users` WHERE `id` IN (1, 3);
+  SELECT * FROM `new_schema`.`users` WHERE id NOT IN (1, 4);
+  SELECT * FROM `new_schema`.`users` WHERE height BETWEEN 160 AND 190;
+  SELECT * FROM `new_schema`.`users` WHERE name LIKE '%a%';(contain the letter a)
+  SELECT * FROM `new_schema`.`users` WHERE name LIKE 'J%';(start with J)
+  SELECT * FROM `new_schema`.`users` WHERE name LIKE '%y';(ends with y)
+
