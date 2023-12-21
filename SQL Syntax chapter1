@@ -1,0 +1,35 @@
+SELECT, INSERT, UPDATE and DELETE
+- Basic Syntax
+  - SELECT `id`, `name` FROM `new_schema`.`users`;
+- sample table
+  CREATE SCHEMA `new_schema` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  CREATE TABLE `new_schema`.`users` (
+    `id` INT NOT NULL AUTO_INCREMENT COMMENT 'This is the primary index',
+    `name` VARCHAR(45) NOT NULL DEFAULT 'N/A',
+    `age` INT NULL,
+    `height` INT NULL,
+    PRIMARY KEY (`id`)
+  );
+  INSERT INTO `new_schema`.`users` (`id`, `name`, `age`, `height`) VALUES (1, 'John', 50, 180);
+  INSERT INTO `new_schema`.`users` (`id`, `name`, `age`) VALUES (2, 'May', 40);
+  INSERT INTO `new_schema`.`users` (`id`, `name`, `age`, `height`) VALUES (3, 'Tim', 10, 170);
+  INSERT INTO `new_schema`.`users` (`id`, `name`, `age`, `height`) VALUES (4, 'Jay', 20, 155);
+
+Create data: INSERT
+INSERT INTO `new_schema`.`users` (`id`, `name`, `age`) VALUES (4, 'Harry', 33);4
+INSERT INTO `new_schema`.`users` (`id`, `name`, `age`) VALUES (4, 'Harry', 33), (5, 'Tom', 30);
+
+Read Data; SELECT
+SELECT `id`, `name` FROM `new_schema`.`users`;
+
+read ALL
+SELECT * FROM `new_schema`.`users`;
+
+Conditions
+SELECT * FROM `new_schema`.`users` WHERE `id` = 2; use where clause
+
+Modify Data: UPDATE
+UPDATE `new_schema`.`users` SET `name` = 'Andy', `age` = 100 WHERE `id` = 2;
+
+Remove Data: DELETE
+DELETE FROM `new_schema`.`users` where `id` = 1;
