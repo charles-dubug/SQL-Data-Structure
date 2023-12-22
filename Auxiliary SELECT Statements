@@ -1,0 +1,55 @@
+Sample Data:
+CREATE SCHEMA `new_schema` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE `new_schema`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'This is the primary index',
+  `name` VARCHAR(45) NOT NULL DEFAULT 'N/A',
+  `age` INT NULL,
+  `height` INT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `new_schema`.`users` (`id`, `name`, `age`, `height`) VALUES 
+  (1, 'John', 40, 150),
+  (2, 'May', 30, 140),
+  (3, 'Tim', 25, 170),
+  (4, 'Jay', 60, 185),
+  (5, 'Maria', 30, 190),
+  (6, 'Tom', 53, 200),
+  (7, 'Carter', 40, 145);
+
+Uniqueness: DISTINCT
+SELECT DISTINCT age FROM `new_schema`.`users`;
+
+Pagination: LIMIT & OFFSET
+- used when result has too much data
+- Limit, limiting the number of items displayed
+- OFFSET, skipping the first specified number of items
+SELECT * FROM `new_schema`.`users` LIMIT 3 OFFSET 1;
+
+Sorting: ORDER
+- ORDER is usually used at the end of the query to optimize the search results,
+SELECT * FROM `new_schema`.`users` ORDER BY age;
+SELECT * FROM `new_schema`.`users` ORDER BY age ASC; (ascending order)
+SELECT * FROM `new_schema`.`users` ORDER BY age DESC; (descending order)
+SELECT * FROM `new_schema`.`users` ORDER BY age DESC, height DESC; (multicolumn sorting)
+
+Grouping: GROUP BY
+- focuses on groupling language
+SELECT `age` FROM `new_schema`.`users` GROUP BY age;
+-  Aggregate Function statements, 
+    so the data can be combined to generate results like reports (to learn more about aggregate functions, see the following chapters!).
+SELECT COUNT(*), `age` FROM `new_schema`.`users` GROUP BY age;
+count(*)	age
+2	40
+2	30
+1	25
+1	60
+1	53
+
+SELECT COUNT(*) AS `age_count`, `age`
+FROM `new_schema`.`users`
+GROUP BY age
+ORDER BY `age_count`;
+#write a query that meets the given conditions
+#how to display the data
