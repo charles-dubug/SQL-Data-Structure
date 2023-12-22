@@ -15,4 +15,9 @@ WHERE
   SELECT * FROM `new_schema`.`users` WHERE name LIKE '%a%';(contain the letter a)
   SELECT * FROM `new_schema`.`users` WHERE name LIKE 'J%';(start with J)
   SELECT * FROM `new_schema`.`users` WHERE name LIKE '%y';(ends with y)
-
+- Order
+  - ORDER BY ..
+- IF statenetb
+  - CASE
+    WHEN
+    THEN
