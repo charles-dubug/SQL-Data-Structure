@@ -1,0 +1,55 @@
+JSON in SQL
+- 3 prominent characteristics
+  - Wrap the data in curly brackets {}
+  - The text in double quotation marks can be used as the column name like "{"place": "U.S"}"
+  - The square brackets [] can wrap multiple, similar data.
+Data Sample:
+{
+    "orderId": 54321,
+    "info": [
+        {
+            "productID": 34,
+            "productName": "productOne",
+            "quantity": 1
+        },
+        {
+            "productID": 56,
+            "productName": "productTwo",
+            "quantity": 3
+        },
+    ],
+    "orderCompleted": true
+}
+
+Set Datatype to JSON
+ALTER TABLE `new_schema`.`users` 
+ADD COLUMN `contact` JSON NULL AFTER `id`;
+
+CREATE TABLE `new_schema`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'This is the primary index',
+  `name` VARCHAR(45) NOT NULL DEFAULT 'N/A',
+  PRIMARY KEY (`id`)
+);
+ALTER TABLE `new_schema`.`users` ADD COLUMN `contact` JSON NULL AFTER `id`;
+INSERT INTO `new_schema`.`users` (`id`, `name`, `contact`) VALUES 
+  (1, 'John', JSON_OBJECT('phone', '123-456', 'address', 'New York')),
+  (2, 'May', JSON_OBJECT('phone', '888-99', 'address', 'LA')),
+  (3, 'Tim', JSON_OBJECT('phone', '1236')),
+  (4, 'Jay', JSON_OBJECT('phone', '321-6', 'address', 'Boston'));
+
+Read Data
+SELECT `id`, JSON_EXTRACT(contact, '$.phone') AS phone
+FROM `new_schema`.`users`;
+#Select only phone column data
+- JSON_EXTRACT(outer column name, JSON column name prefixed with $.)
+- AS to rename the selected column as phone
+- with condition
+  SELECT `id`, JSON_UNQUOTE(JSON_EXTRACT(contact, '$.phone')) AS phone
+  FROM `new_schema`.`users`
+  WHERE JSON_EXTRACT(contact, '$.phone') like '%456%';
+
+Add Data
+INSERT INTO `new_schema`.`users` (`id`, `name`, `contact`) VALUES (5, 'Harry', JSON_OBJECT('phone', '1231123', 'address', 'Miami'));
+Update Data
+UPDATE `new_schema`.`users` SET `contact` = JSON_SET(contact, '$.phone', '6666', '$.phone_2', '888') WHERE `id` = 2;
+Notice that if the column set to JSON_SET is not in the original JSON column name, a new pair will be generated directly, which is a very convenient setting. Likewise, since we did not include "address" while updating the JSON, the previous address was retained.
